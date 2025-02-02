@@ -24,15 +24,35 @@ return {
     },
   },
   {
+    'HiPhish/rainbow-delimiters.nvim',
+  },
+  {
+    'rebelot/terminal.nvim',
+    config = function()
+      require('terminal').setup()
+      local term_map = require 'terminal.mappings'
+      vim.keymap.set({ 'n', 'x' }, '<leader>tx', term_map.operator_send, { expr = true, desc = 'Send a command to the terminal' })
+      vim.keymap.set('n', '<leader>to', term_map.toggle, { desc = '[To]ggle terminal' })
+      vim.keymap.set('n', '<leader>tO', term_map.toggle { open_cmd = 'enew' }, { desc = 'Open new terminal' })
+      vim.keymap.set('n', '<leader>tr', term_map.run, { desc = 'Run a command' })
+      vim.keymap.set('n', '<leader>tR', term_map.run(nil, { layout = { open_cmd = 'enew' } }), { desc = 'Run a command in a new terminal and open' })
+      vim.keymap.set('n', '<leader>tk', term_map.kill, { desc = 'Kill a terminal' })
+      vim.keymap.set('n', '<leader>t]', term_map.cycle_next, { desc = 'Next terminal' })
+      vim.keymap.set('n', '<leader>t[', term_map.cycle_prev, { desc = 'Previous terminal' })
+      vim.keymap.set('n', '<leader>tl', term_map.move { open_cmd = 'belowright vnew' }, { desc = 'Move terminal to the bottom right' })
+      vim.keymap.set('n', '<leader>tL', term_map.move { open_cmd = 'botright vnew' }, { desc = 'Move terminal to the right' })
+      vim.keymap.set('n', '<leader>th', term_map.move { open_cmd = 'belowright new' }, { desc = 'Move terminal to the bottom' })
+      vim.keymap.set('n', '<leader>tH', term_map.move { open_cmd = 'botright new' }, { desc = 'Move terminal to the bottom full' })
+      vim.keymap.set('n', '<leader>tf', term_map.move { open_cmd = 'float' }, { desc = 'Float terminal' })
+    end,
+  },
+  {
     'olexsmir/gopher.nvim',
     ft = 'go',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
-    build = function()
-      vim.cmd.GoInstallDeps()
-    end,
     ---@type gopher.Config
     opts = {},
   },
